@@ -31,6 +31,26 @@ function App() {
     setTasks(updatedTasks);
   };
 
+  const editBookById = (id, newTitle) => {
+    const editedTasks = tasks.map((task) => {
+      if (task.id === id) {
+        return { ...task, title: newTitle };
+      }
+      return task;
+    });
+    setTasks(editedTasks);
+  };
+
+  const completeTaskByID = (id, newCompleted) => {
+    const completedTasks = tasks.map((task) => {
+      if (task.id === id) {
+        return { ...task, completed: newCompleted };
+      }
+      return task;
+    });
+    setTasks(completedTasks);
+  };
+
   return (
     <div className="App">
       <div className="App-header">
@@ -39,7 +59,12 @@ function App() {
       <TaskCreate onCreate={createTask} />
       <div>
         <h2 className="task-subtitle">Tasks</h2>
-        <TaskList tasks={tasks} onDelete={deleteTaskByID} />
+        <TaskList
+          tasks={tasks}
+          onDelete={deleteTaskByID}
+          onEdit={editBookById}
+          onComplete={completeTaskByID}
+        />
       </div>
     </div>
   );

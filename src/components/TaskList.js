@@ -1,9 +1,17 @@
 import React from "react";
 import TaskShow from "./TaskShow.js";
 
-function TaskList({ tasks, onDelete }) {
+function TaskList({ tasks, onDelete, onEdit, onComplete }) {
   const renderedTasks = tasks.map((task) => {
-    return <TaskShow task={task} key={task.id} onDelete={onDelete} />;
+    return (
+      <TaskShow
+        task={task}
+        key={task.id}
+        onDelete={onDelete}
+        onEdit={onEdit}
+        onComplete={onComplete}
+      />
+    );
   });
 
   return (
