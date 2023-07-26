@@ -1,0 +1,24 @@
+{
+  "tasks": [
+    {
+      "title": "new task!2",
+      "completed": true,
+      "id": 1
+    },
+    {
+      "title": "n edited!",
+      "completed": false,
+      "id": 2
+    },
+    {
+      "title": "now we have",
+      "completed": true,
+      "id": 3
+    },
+    {
+      "title": "data persistance!",
+      "completed": false,
+      "id": 4
+    }
+  ]
+}

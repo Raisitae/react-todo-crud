@@ -1,50 +1,64 @@
 import "./App.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import TaskCreate from "./components/TaskCreate.js";
 import TaskList from "./components/TaskList.js";
+import axios from "axios";
 
 function App() {
   const [tasks, setTasks] = useState([]);
+  const URL = process.env.REACT_APP_SERVER_URL;
 
-  // important, we need the ...tasks to keep the
-  // previous tasks, because we are working with objetcs
-  // and not with arrays
+  useEffect(() => {
+    const fetchTasks = async () => {
+      const response = await axios.get(URL + "tasks");
+      setTasks(response.data);
+    };
+    fetchTasks();
+  }, []);
 
-  const createTask = (task) => {
-    const updatedTasks = [
-      ...tasks,
-      {
-        id: Math.round(Math.random() * 1000),
-        title: task,
-        //description: description,
-        completed: false,
-      },
-    ];
-    setTasks(updatedTasks);
-  };
-
-  const deleteTaskByID = (id) => {
-    const updatedTasks = tasks.filter((task) => {
-      return task.id !== id;
+  const createTask = async (title, completed) => {
+    const response = await axios.post(URL + "tasks", {
+      title,
+      completed: false,
     });
 
+    const updatedTasks = [...tasks, response.data];
     setTasks(updatedTasks);
+    // important, we need the ...tasks to keep the
+    // previous tasks, because we are working with objetcs
+    // and not with arrays
   };
 
-  const editBookById = (id, newTitle) => {
+  const editTaskById = async (id, newTitle) => {
+    const response = await axios.patch(URL + "tasks/" + id, {
+      title: newTitle,
+    });
+
     const editedTasks = tasks.map((task) => {
       if (task.id === id) {
-        return { ...task, title: newTitle };
+        return { ...task, ...response.data };
       }
       return task;
     });
+
     setTasks(editedTasks);
   };
 
-  const completeTaskByID = (id, newCompleted) => {
+  const deleteTaskByID = async (id) => {
+    await axios.delete(URL + "tasks/" + id);
+
+    const deletedTasks = [...tasks].filter((task) => task.id !== id);
+    setTasks(deletedTasks);
+  };
+
+  const completeTaskByID = async (id, newCompleted) => {
+    const response = await axios.patch(URL + "tasks/" + id, {
+      completed: newCompleted,
+    });
+
     const completedTasks = tasks.map((task) => {
       if (task.id === id) {
-        return { ...task, completed: newCompleted };
+        return { ...task, ...response.data };
       }
       return task;
     });
@@ -62,7 +76,7 @@ function App() {
         <TaskList
           tasks={tasks}
           onDelete={deleteTaskByID}
-          onEdit={editBookById}
+          onEdit={editTaskById}
           onComplete={completeTaskByID}
         />
       </div>
