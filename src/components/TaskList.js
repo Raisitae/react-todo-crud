@@ -1,17 +1,13 @@
 import React from "react";
 import TaskShow from "./TaskShow.js";
+import { useContext } from "react";
+import TaskContext from "../context/TaskContext";
 
-function TaskList({ tasks, onDelete, onEdit, onComplete }) {
+function TaskList() {
+  const { tasks } = useContext(TaskContext);
+
   const renderedTasks = tasks.map((task) => {
-    return (
-      <TaskShow
-        task={task}
-        key={task.id}
-        onDelete={onDelete}
-        onEdit={onEdit}
-        onComplete={onComplete}
-      />
-    );
+    return <TaskShow task={task} key={task.id} />;
   });
 
   return (

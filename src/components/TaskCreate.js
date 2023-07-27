@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import TaskContext from "../context/TaskContext";
 
-function TaskCreate({ onCreate }) {
+function TaskCreate() {
+  const { createTask } = useContext(TaskContext);
+
   const [task, setTask] = useState("");
 
   const handleChange = (e) => {
@@ -13,7 +16,7 @@ function TaskCreate({ onCreate }) {
       alert("Please enter a task!");
       return;
     }
-    onCreate(task);
+    createTask(task);
     setTask("");
   };
 
