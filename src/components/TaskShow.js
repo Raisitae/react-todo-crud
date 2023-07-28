@@ -1,12 +1,10 @@
 import { useState } from "react";
 import TaskEdit from "./TaskEdit.js";
-import { useContext } from "react";
-import TaskContext from "../context/TaskContext";
+import useTaskContext from "../hooks/use-task-context.js";
 
 function TaskShow({ task }) {
   const [showEdit, setShowEdit] = useState(false);
-  const { deleteTaskByID, editTaskById, completeTaskByID } =
-    useContext(TaskContext);
+  const { deleteTaskByID, editTaskById, completeTaskByID } = useTaskContext();
 
   const handleDelete = () => {
     deleteTaskByID(task.id);

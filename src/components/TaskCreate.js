@@ -1,8 +1,8 @@
-import React, { useState, useContext } from "react";
-import TaskContext from "../context/TaskContext";
+import React, { useState } from "react";
+import useTaskContext from "../hooks/use-task-context";
 
 function TaskCreate() {
-  const { createTask } = useContext(TaskContext);
+  const { createTask } = useTaskContext();
 
   const [task, setTask] = useState("");
 

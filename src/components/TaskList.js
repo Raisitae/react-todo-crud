@@ -1,10 +1,9 @@
 import React from "react";
 import TaskShow from "./TaskShow.js";
-import { useContext } from "react";
-import TaskContext from "../context/TaskContext";
+import useTaskContext from "../hooks/use-task-context.js";
 
 function TaskList() {
-  const { tasks } = useContext(TaskContext);
+  const { tasks } = useTaskContext();
 
   const renderedTasks = tasks.map((task) => {
     return <TaskShow task={task} key={task.id} />;
