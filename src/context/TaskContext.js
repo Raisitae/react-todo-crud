@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import axios from "axios";
 
 const TaskContext = createContext();
@@ -8,10 +8,10 @@ function Provider({ children }) {
   const [tasks, setTasks] = useState([]);
   const URL = process.env.REACT_APP_SERVER_URL;
 
-  const fetchTasks = async () => {
+  const fetchTasks = useCallback(async () => {
     const response = await axios.get(URL + "tasks");
     setTasks(response.data);
-  };
+  }, []);
 
   const createTask = async (title, completed) => {
     const response = await axios.post(URL + "tasks", {
